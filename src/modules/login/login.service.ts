@@ -28,7 +28,7 @@ export class LoginService {
     // 密码不正确
     const compareRes = bcryptjs.compareSync(loginData.password, findUser.password)
     if (!compareRes) throw new BadRequestException("密码不正确")
-    const payload = { username: findUser.username }
+    const payload = { username: findUser.username, id: findUser.id }
     return {
       token: this.jwtService.sign(payload)
     }

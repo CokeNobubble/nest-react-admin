@@ -6,11 +6,11 @@ import { Rt_Users } from '../register/entities/register.entity';
 import { Like, Repository } from 'typeorm';
 import jwt_decode from "jwt-decode"; // 解析token
 import { IUserListParams } from "./user-list.controller"
-
-export interface IUser {
+interface IUser {
   username: string,
   iat: number,
-  exp: number
+  exp: number,
+  id: number
 }
 
 @Injectable()
@@ -52,7 +52,8 @@ export class UserListService {
 
   async findOne(token: string) {
     const decode: IUser = jwt_decode(token)
-    const findUser = await this.user.findOne({ where: { username: decode.username } })
+    const findUser = await this.user.findOne({ where: { id: decode.id } })
+    console.log(decode);
     delete findUser.password
     return findUser;
   }

@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { UserListModule } from './modules/user-list/user-list.module';
+import { UserAvatarModule } from './modules/user-avatar/user-avatar.module';
 
 @Module({
   imports: [LoginModule, RegisterModule, VerificationCodeModule, TypeOrmModule.forRoot({
@@ -21,7 +22,7 @@ import { UserListModule } from './modules/user-list/user-list.module';
     retryDelay: 500, //重试连接数据库间隔
     retryAttempts: 10,//重试连接数据库的次数
     autoLoadEntities: true, //如果为true,将自动加载实体 forFeature()方法注册的每个实体都将自动添加到配置对象的实体数组中
-  }), UserListModule],
+  }), UserListModule, UserAvatarModule],
   controllers: [AppController],
   providers: [
     AppService,

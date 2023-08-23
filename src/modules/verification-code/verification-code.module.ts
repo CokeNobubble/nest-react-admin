@@ -6,4 +6,4 @@ import { VerificationCodeController } from './verification-code.controller';
   controllers: [VerificationCodeController],
   providers: [VerificationCodeService]
 })
-export class VerificationCodeModule {}
+export class VerificationCodeModule { }

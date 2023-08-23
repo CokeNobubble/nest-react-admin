@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Headers, Query, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Headers, Query, ParseIntPipe, Res } from '@nestjs/common';
 import { UserListService } from './user-list.service';
 import { CreateUserListDto } from './dto/create-user-list.dto';
-
+import type { Response, query } from 'express';
 
 export interface IUserListParams {
   keyword: string,
@@ -42,5 +42,11 @@ export class UserListController {
   @Delete('/remove')
   remove(@Body("id") id: number) {
     return this.userListService.remove(id);
+  }
+
+  // 导出
+  @Get("/exportExcel")
+  exportExcel(@Query("ids") ids: string[]) {
+    return this.userListService.exportExcel(ids);
   }
 }

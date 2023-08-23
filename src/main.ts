@@ -6,11 +6,13 @@ import * as session from "express-session"
 import * as cors from "cors"
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.use(cors())
   app.useGlobalInterceptors(new GlobalResponse())
   app.useGlobalFilters(new HttpFilter())
+  app.useGlobalPipes(new ValidationPipe())
   app.use(session({
     secret: 'lee',
     rolling: true,
@@ -24,8 +26,6 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, 'images'), {
     prefix: '/'
   })
-
-
   await app.listen(3005);
 }
 bootstrap();

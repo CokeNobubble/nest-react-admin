@@ -15,6 +15,12 @@ export class VerificationCodeController {
     @Res() res: Response,
     @Query("width", ParseIntPipe) width: number,
     @Query("height", ParseIntPipe) height: number) {
-    return this.verificationCodeService.createCode(session, res, width, height);
+    const data = this.verificationCodeService.createCode(session, width, height);
+    res.type('image/svg+xml');
+    res.send({
+      code: 0,
+      data,
+      msg: "成功"
+    })
   }
 }

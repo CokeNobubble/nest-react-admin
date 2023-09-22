@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Headers, Query, ParseIntPipe, Res } from '@nestjs/common';
 import { UserListService } from './user-list.service';
 import { CreateUserListDto } from './dto/create-user-list.dto';
-import type { Response, query } from 'express';
 
 export interface IUserListParams {
   keyword: string,

@@ -9,6 +9,7 @@ import { APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { UserListModule } from './modules/user-list/user-list.module';
 import { UserAvatarModule } from './modules/user-avatar/user-avatar.module';
 import { MysqlConfigModule } from './common/mysql/config';
+import { RoutesModule } from './modules/routes/routes.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { MysqlConfigModule } from './common/mysql/config';
     MysqlConfigModule,
     UserListModule,
     UserAvatarModule,
+    RoutesModule,
   ],
   controllers: [AppController],
   providers: [

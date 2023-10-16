@@ -8,16 +8,16 @@ export class Rt_Routes {
   @Column()
   pid: number; // 父级id
 
-  @Column()
+  @Column({unique:true})
   path: string; // 路由地址
 
-  @Column({ default: null })
+  @Column({ default: null ,unique:true})
   title: string; // 路由标题
 
-  @Column({ default: null })
+  @Column({ default: null,unique:true })
   icon: string; // 路由图标
 
-  @Column({ default: null })
+  @Column({ default: null,unique:true })
   component: string; // 路由组件
 
   @Column('simple-array')

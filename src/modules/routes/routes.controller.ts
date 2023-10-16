@@ -9,6 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { RoutesService } from './routes.service';
+import { CreateRouteDto } from './dto/create-route.dto';
 
 @Controller('routes')
 export class RoutesController {
@@ -18,5 +19,21 @@ export class RoutesController {
   getRoutes(@Query('role') role: string) {
     console.log(role);
     return this.routesService.getRoutes(role);
+  }
+
+  @Get('menu')
+  getMenu() {
+    return this.routesService.getMenu();
+  }
+
+  @Get('icons')
+  getIcon() {
+    return this.routesService.getIcon();
+  }
+
+  @Post('/addMenu')
+  addMenu(@Body() route: CreateRouteDto) {
+    console.log(route);
+    return this.routesService.addMenu(route);
   }
 }

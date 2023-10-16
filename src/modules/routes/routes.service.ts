@@ -1,7 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Rt_Routes } from './entities/routes.entity';
+import { CreateRouteDto } from './dto/create-route.dto';
+
+type Icons = {
+  icon: string;
+};
 
 @Injectable()
 export class RoutesService {
@@ -9,6 +14,7 @@ export class RoutesService {
     @InjectRepository(Rt_Routes) private readonly routes: Repository<Rt_Routes>,
   ) {}
 
+  // 获取路由表
   async getRoutes(role: string) {
     const routes = await this.routes.find();
     const findRoutes = routes.filter((route) =>
@@ -48,5 +54,42 @@ export class RoutesService {
       });
     }
     return parentRoutes;
+  }
+
+  async getMenu() {
+    const routes = await this.routes.find();
+    return routes;
+  }
+
+  // 获取图标列表
+  async getIcon() {
+    // 单独查询某列（icon这一列）
+    const icons: Icons[] = await this.routes
+      .createQueryBuilder('route')
+      .select('icon')
+      .getRawMany();
+    console.log(icons);
+    const res = icons.filter((item) => item.icon !== null);
+    return res;
+  }
+
+  // 添加路由菜单
+  async addMenu(route: CreateRouteDto) {
+    const obj = JSON.parse(JSON.stringify(route));
+    delete obj.pid;
+    delete obj.permission;
+    const routes = await this.routes.find();
+    for (const key in obj) {
+      const res = this.findCommonProp(routes, key, obj[key]);
+      if (res) throw new BadRequestException('该路由已存在');
+    }
+    // console.log(routes);
+    return this.routes.save(route);
+  }
+
+  // 找出路由表中存在的属性值
+  findCommonProp(routes: Rt_Routes[], prop: string, value: string) {
+    const findRes = routes.find((route) => route[prop] === value);
+    return findRes;
   }
 }

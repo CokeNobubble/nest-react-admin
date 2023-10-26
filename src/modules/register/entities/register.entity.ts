@@ -1,9 +1,5 @@
-import {
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  Entity,
-} from 'typeorm';
+import { Rt_Department } from 'src/modules/department-mag/entities/department-mag.entity';
+import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from 'typeorm';
 
 // 用户表
 @Entity()
@@ -33,14 +29,18 @@ export class Rt_Users {
   desc: string;
 
   // 角色类型
-  @Column({ default: 'common' })
+  @Column({ type: 'varchar', default: 'common' })
   role: string;
 
-  @Column('simple-array')
-  roles: string[];
-
-  @CreateDateColumn({ type: 'timestamp' })
+  @Column({
+    name: 'create_time',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createTime: Date;
+
+  @ManyToOne(() => Rt_Department, (rt_Department) => rt_Department.id)
+  rt_Department: Rt_Department;
 }
 
 // 角色表

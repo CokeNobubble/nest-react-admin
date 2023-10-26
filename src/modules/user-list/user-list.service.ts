@@ -60,13 +60,9 @@ export class UserListService {
   async findOne(token: string) {
     const decode: IUser = jwt_decode(token);
     const findUser = await this.user.findOne({ where: { id: decode.id } });
-    const findUserRole = await this.role.find({
-      where: { role_type: findUser.role },
-    });
-    findUser.roles = [findUserRole[0].role_type];
-    delete findUser.password;
-    // const user = { ...findUser, roles: [findUserRole[0].role_type] };
-    return findUser;
+    const user = { ...findUser, roles: [findUser.role] };
+    delete user.password;
+    return user;
   }
 
   async update(id: number, updateUserListDto: UpdateUserListDto) {

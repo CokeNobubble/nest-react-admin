@@ -5,4 +5,5 @@ export class CreateRouteDto {
   component: string;
   permission: string[];
   pid: number;
+  id?: number;
 }

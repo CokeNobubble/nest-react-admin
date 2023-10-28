@@ -27,7 +27,7 @@ export class UserListService {
     return 'This action adds a new userList';
   }
 
-  async findAll(query: IUserListParams) {
+  async getPage(query) {
     const findAll = await this.user.find({
       where: {
         username: Like(`%${query.keyword}%`),
@@ -43,7 +43,17 @@ export class UserListService {
         username: Like(`%${query.keyword}%`),
       },
     });
-    const userList = findAll.map((user) => {
+    return { findAll, total };
+  }
+
+  async findAll(query: IUserListParams) {
+    let result = await this.getPage(query);
+    if (query.current > Math.ceil(result.total / query.size)) {
+      query.current = query.current - 1;
+      result = await this.getPage(query);
+    }
+
+    const userList = result.findAll.map((user) => {
       delete user.password;
       return user;
     });
@@ -51,7 +61,7 @@ export class UserListService {
       list: userList,
       page: {
         size: Number(query.size),
-        total,
+        total: result.total,
         current: Number(query.current),
       },
     };

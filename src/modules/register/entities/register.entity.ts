@@ -1,6 +1,5 @@
-import { Rt_Department } from 'src/modules/department-mag/entities/department-mag.entity';
 import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from 'typeorm';
-
+import { Rt_DeptMag } from 'src/modules/dept-mag/entities/dept-mag.entity';
 // 用户表
 @Entity()
 export class Rt_Users {
@@ -28,6 +27,9 @@ export class Rt_Users {
   @Column({ default: null })
   desc: string;
 
+  @Column({ default: null })
+  rtDepartmentId: number;
+
   // 角色类型
   @Column({ type: 'varchar', default: 'common' })
   role: string;
@@ -39,8 +41,8 @@ export class Rt_Users {
   })
   createTime: Date;
 
-  @ManyToOne(() => Rt_Department, (rt_Department) => rt_Department.id)
-  rt_Department: Rt_Department;
+  @ManyToOne((type) => Rt_DeptMag, (dept) => dept.name)
+  rt_DeptMag: Rt_DeptMag;
 }
 
 // 角色表

@@ -11,7 +11,7 @@ import { UserAvatarModule } from './modules/user-avatar/user-avatar.module';
 import { MysqlConfigModule } from './common/mysql/config';
 import { RoutesModule } from './modules/routes/routes.module';
 import { IconsModule } from './modules/icons/icons.module';
-import { DepartmentMagModule } from './modules/department-mag/department-mag.module';
+import { DeptMagModule } from './modules/dept-mag/dept-mag.module';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { DepartmentMagModule } from './modules/department-mag/department-mag.mod
     UserAvatarModule,
     RoutesModule,
     IconsModule,
-    DepartmentMagModule,
+    DeptMagModule,
   ],
   controllers: [AppController],
   providers: [

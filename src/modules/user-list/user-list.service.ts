@@ -29,6 +29,7 @@ export class UserListService {
 
   async getPage(query) {
     const findAll = await this.user.find({
+      relations: ['rt_DeptMag'],
       where: {
         username: Like(`%${query.keyword}%`),
       },
